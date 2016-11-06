@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <style type='text/css'>
+      body {background-color: #ccc;} 
+      #visualization {
+        margin: 50px; 
+        width: 750px; 
+        height: 600px; 
+        border-radius: 4px; 
+        border: 1px solid #eee; 
+        background-color: #fff; 
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id='visualization'>
+      <svg width='100%' height='100%'></svg>
+    </div>
+
+    <script src='https://d3js.org/d3.v4.js'></script>
+    <script type='text/javascript'>
+        /************************************
+        *    HIDDEN INITIALIZATION BLOCK    *
+        ************************************/
+        
+        // Select the DOM element
+        var parent = d3.select("#visualization");
+        
+        // Set up the margins
+        var bbox   = parent.node().getBoundingClientRect();
+        var margin = {top: 50, right: 50, bottom: 50, left: 200};
+        var width  = +bbox.width - margin.left - margin.right;
+        var height = +bbox.height - margin.top - margin.bottom;
+        
+        // Define svg as a group within the base SVG.
+        var svg = parent.select("svg").append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");          
+        /************************************
+        *  END HIDDEN INITIALIZATION BLOCK  *
+        ************************************/
+        
+        var data = [
+          407,
+          433,
+          228,
+          274,
+          268,
+          209,
+          209,
+          152,
+          97,
+          210,
+          384,
+          299,
+          383,
+          402,
+          153,
+          269,
+          375,
+          423,
+          267,
+          327,
+          155,
+          163,
+          172,
+          214,
+          143,
+          116,
+          211,
+          145,
+          203,
+          195,
+          104,
+          166,
+          147,
+          292,
+          198,
+          201,
+          219,
+          224,
+          249,
+          149,
+          177,
+          268,
+          17,
+          93,
+          196,
+          397,
+          234,
+          227,
+          320,
+          343
+        ];
+
+        var data2 = [
+          "Liberty Ave & Stanwix St",
+          "Forbes Ave & Market Square",
+          "Third Ave & Wood St",
+          "First Ave & Smithfield St",
+          "First Ave & B St",
+          "Forbes Ave & Grant St",
+          "Ross St & Sixth Ave",
+          "Stevenson St & Forbes Ave",
+          "Centre Ave & PPG Paints Arena",
+          "12th St & Penn Ave",
+          "10th St & Penn Ave",
+          "Fort Duquesne Blvd & 7th",
+          "North Shore Trail & Ft Duquesne Bridge",
+          "Isabella St & Federal St",
+          "Ridge Ave & Brighton Rd",
+          "Federal St & E North Ave",
+          "17th St & Penn Ave",
+          "21st St & Penn Ave",
+          "37th St & Butler St",
+          "42nd St & Butler St",
+          "42nd St & Penn Ave",
+          "Taylor St & Liberty Ave",
+          "Liberty Ave & S Millvale",
+          "Liberty Ave & Baum Blvd",
+          "S Negley Ave & Baum Blvd",
+          "Penn Ave & N Fairmount St",
+          "Penn Ave & S Whitfield St",
+          "Shady Ave & Ellsworth Ave",
+          "Penn Ave & Putnam St",
+          "Alder St & S Higland Ave",
+          "S Euclid Ave & Centre Ave",
+          "Maryland Ave & Ellsworth Ave",
+          "Walnut St & College St",
+          "Ivy St & Walnut St",
+          "Ellsworth Ave & N Neville St",
+          "Fifth Ave & S Dithridge St",
+          "Schenley Dr at Schenley Plaza",
+          "Frew St & Schenley Dr",
+          "Boulevard of the Allies & Parkview Ave",
+          "Atwood St & Bates",
+          "Bigelow Blvd & Fifth Ave",
+          "Fifth Ave & S Bouquet St",
+          "Centre Ave & Kirkpatrick St",
+          "Coltart Ave & Forbes Ave",
+          "Zulema St & Coltart Ave",
+          "S 27th St & Sidney St",
+          "S 25th St & E Carson St",
+          "S 22nd St & E Carson St",
+          "S 18th St & Sidney St",
+          "S 12th St & E Carson St"
+        ];
+
+        
+        // define the bar height
+        var barHeight = height/data.length;
+        
+        // set up the x scale
+        var x = d3.scaleLinear().domain([0, d3.max(data)]).range([0, width]);
+        
+        // Create each bar, select the enter selection, and append a svg group.
+        var bar = svg.selectAll("g").data(data)
+          .enter().append("g") 
+            .attr("transform", function(d, i) {     
+                return "translate(0," + i * barHeight + ")"; 
+            })
+        
+        // for each of those groups, append a rectangle...
+        bar.append("rect")
+            .attr("height", barHeight - 5)
+            .attr("width", x)
+            .style("fill", "rebeccapurple")
+        
+        //bike diversity
+        bar.append("text")
+            .attr("x", function(d) { return x(d) + 11; })
+            .attr("y", barHeight / 2)
+            .attr("dy", "0em")
+            .style("fill", "black")
+            .style("font-size", "7px")
+            .style("text-anchor", "end")
+            .text(function(d) { return d; })
+
+        //station numbers
+        var bar2 = svg.selectAll("g").data(data2)
+          .enter().append("g") 
+            .attr("transform", function(d, i) {     
+                return "translate(0," + i * barHeight + ")"; 
+            })
+
+        bar.append("text")
+            .attr("x", -15)
+            .attr("y", barHeight / 2)
+            .attr("dy", "0em")
+            .style("fill", "black")
+            .style("font-size", "8.5px")
+            .style("text-anchor", "end")
+            .text(function(d) { return d; });
+
+        svg.append("text")
+        .attr("x", 0)             
+        .attr("y", 0 - (margin.top / 2)) 
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Bike Diversity Per Station");
+
+
+    </script>
+  </body>
+</html>
