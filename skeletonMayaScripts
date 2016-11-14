@@ -1,0 +1,73 @@
+#RANDOM INSTANCES
+
+
+import maya.cmds as cmds
+import random
+
+random.seed(1234)
+
+result = cmds.ls(orderedSelection=True)
+
+print 'result: %s ' % ( result )
+
+transformName = result[0]
+
+instanceGroupName = cmds.group(empty=True, name=transformName + '_instance_group#')
+
+for i in range(0,100):
+    #makes new instance
+    instanceResult = cmds.instance(transformName, name = transformName + '_instance#')
+    
+    #use parent command to add each instance to the group
+    cmds.parent(instanceResult, instanceGroupName)
+    
+    #random x,y,z values
+    x = random.uniform(-10,10,)
+    y = random.uniform(0,20,)
+    z = random.uniform(-10,10,)
+    
+    #move based on random values
+    cmds.move(x, y, z, instanceResult)
+    
+    #random rotation angles
+    xRotation = random.uniform(0,360)
+    yRotation = random.uniform(0,360)
+    zRotation = random.uniform(0,360)
+    
+    #rotate based on rotation values
+    cmds.rotate(xRotation, yRotation, zRotation, instanceResult)
+    
+    #scaling factor
+    scalingFactor = random.uniform(0.3, 1.5)
+    
+    #scale based on scaling factor
+    cmds.scale(scalingFactor, scalingFactor, scalingFactor, instanceResult)
+    
+#makes original thing invisible in scene
+cmds.hide(transformName)
+
+**************************************************************Other half of code
+
+#MAKE RANDOM THINGS AIM AT MAIN THING
+    
+
+import maya.cmds as cmds
+
+selectionList = cmds.ls(orderedSelection=True)
+
+if len(selectionList) >= 2:
+    print 'Selected items %s' % (selectionList)
+    
+    #first item in list
+    targetName = selectionList[0]
+    
+    selectionList.remove(targetName)
+    
+    #iterate over list
+    for objectName in selectionList:
+        cmds.aimConstraint(targetName, objectName, aimVector=[0,1,0])
+    
+else:
+    print 'Please select two or more objects'
+    
+    
