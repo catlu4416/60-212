@@ -1,0 +1,83 @@
+
+import maya.cmds as m
+
+
+
+def setKeyFramesCircle():
+    #makes list of all selected objects
+    objs = m.ls(selection=True)
+    
+    frame = 0   
+    
+    for i in range(0,30):
+        #sets frame rate
+        frame = i*10
+       
+        #gets cube coords for every frame
+        cubeX = m.getAttr('pCube1.translateX', time=frame)
+        cubeY = m.getAttr('pCube1.translateY', time=frame)
+        cubeZ = m.getAttr('pCube1.translateZ', time=frame)
+        
+
+        #moves cube 
+        cubeX -= 5
+        
+        #loops through every flock object
+        for object in range(1, len(objs)):
+            
+            sphereGet = objs[object]
+            
+            
+            sphereX = m.getAttr('%s.translateX' %sphereGet, time=frame)
+            sphereY = m.getAttr('%s.translateY' %sphereGet, time=frame)
+            sphereZ = m.getAttr('%s.translateZ' %sphereGet, time=frame)
+            
+            #print sphereX, "***", cubeX
+            
+            #moves sphere x
+            sphereX += 10
+            
+            
+            if sphereY < cubeY-2 or sphereY > cubeY+2:
+                if cubeX-sphereX <= 6 and cubeX-sphereX >= -6:
+                    if sphereZ >= cubeZ:
+                        sphereZ += 10
+                    elif sphereZ < cubeZ:
+                        sphereZ -= 10
+                elif cubeX-sphereX <= -5 and sphereZ >= 10:
+                    if sphereZ >= cubeZ:
+                        sphereZ -= 10
+                elif cubeX-sphereX <= -5 and sphereZ <= 10:        
+                    if sphereZ < cubeZ:
+                        sphereZ += 10
+
+                    
+                
+            if sphereY > cubeY-2 or sphereY < cubeY+2:
+                if cubeX-sphereX <= 6 and cubeX-sphereX >= -6:
+                    if sphereY >= cubeY:
+                        print sphereY
+                        sphereY += 10
+                        print "haha"
+                    elif sphereY < cubeY:
+                        sphereY -= 10
+                elif cubeX-sphereX <= -5 and sphereY >= 10:
+                    if sphereY >= cubeY:
+                        sphereY -= 10
+                elif cubeX-sphereX <= -5 and sphereY <= 10:        
+                    if sphereY < cubeY:
+                        sphereY += 10
+
+                
+                
+                
+            
+
+            m.setKeyframe(sphereGet + '.translateX', value=sphereX, time=frame)
+            m.setKeyframe(sphereGet + '.translateZ', value=sphereZ, time=frame)
+            m.setKeyframe(sphereGet + '.translateY', value=sphereY, time=frame)
+        m.setKeyframe(objs[0] + '.translateX', value=cubeX, time=frame)
+        
+        
+setKeyFramesCircle()
+
