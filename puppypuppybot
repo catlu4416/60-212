@@ -1,0 +1,154 @@
+import com.temboo.core.*;
+import com.temboo.Library.Twitter.Search.*;
+import com.temboo.Library.Twitter.Tweets.*;
+import com.temboo.Library.Twitter.DirectMessages.*;
+
+//temboo info
+TembooSession session = new TembooSession("catluo", "myFirstApp", "8bMMsrkZWJOLtgz2qvswdH32to4eFpC3");
+boolean alreadyTweeted = false;
+String tweetedAt = new String ();
+
+void setup() {
+  //// Run the LatestTweet Choreo function
+  //runLatestTweetChoreo();
+  //// Run the StatusesUpdate Choreo function
+  //runStatusesUpdateChoreo();
+  //// Run the SendDirectMessage Choreo function
+  //runSendDirectMessageChoreo();
+  
+}
+
+void draw()
+{
+  int m = minute(); //Establishing the minute count
+  if (m == 0 || m == 15 || m == 22 || m == 30 || m == 40 || m == 50) {
+    if (! alreadyTweeted) {
+      run();
+      println("yay");
+      alreadyTweeted = true;
+    }
+  }
+  if (m != 0 || m != 15 || m != 22 || m != 30 || m != 40 || m != 50){
+    alreadyTweeted = false;
+  }
+
+}
+ 
+void run()
+{
+  runLatestTweetChoreo();
+  runStatusesUpdateChoreo();
+  //runSendDirectMessageChoreo();
+   
+}
+ 
+ 
+void runLatestTweetChoreo() {
+  // Create the Choreo object using your Temboo session
+  LatestTweet latestTweetChoreo = new LatestTweet(session);
+
+  // Set inputs
+  latestTweetChoreo.setQuery("I'm stressed");
+  latestTweetChoreo.setAccessToken("852566361331179520-UZAgavm9ox9VeKVLsEog12QNtFI7wCZ");
+  latestTweetChoreo.setConsumerKey("tjWXfTGej8Fql2fOla3Fh1fwt");
+  latestTweetChoreo.setConsumerSecret("g5W1XnNMIEg8od4KB5q3jOAyTUT1lG6dXtKHToTKrt41Ie2gql");
+  latestTweetChoreo.setAccessTokenSecret("mJpQUZSDLgqTmXgCrTYh5jF30x48Tx48d7IM8k1C62oUd");
+
+  // Run the Choreo and store the results
+  LatestTweetResultSet latestTweetResults = latestTweetChoreo.run();
+
+  //println(latestTweetResults.getScreenName());
+  println(latestTweetResults.getText());
+  
+  //stores User data
+  String tweetedAt = latestTweetResults.getScreenName();
+  //println("***" + tweetedAt);
+  
+
+
+}
+
+
+void runStatusesUpdateChoreo() {
+  
+    // Create the Choreo object using your Temboo session
+  LatestTweet latestTweetChoreo = new LatestTweet(session);
+
+  // Set inputs
+  latestTweetChoreo.setQuery("I'm stressed");
+  latestTweetChoreo.setAccessToken("852566361331179520-UZAgavm9ox9VeKVLsEog12QNtFI7wCZ");
+  latestTweetChoreo.setConsumerKey("tjWXfTGej8Fql2fOla3Fh1fwt");
+  latestTweetChoreo.setConsumerSecret("g5W1XnNMIEg8od4KB5q3jOAyTUT1lG6dXtKHToTKrt41Ie2gql");
+  latestTweetChoreo.setAccessTokenSecret("mJpQUZSDLgqTmXgCrTYh5jF30x48Tx48d7IM8k1C62oUd");
+
+  // Run the Choreo and store the results
+  LatestTweetResultSet latestTweetResults = latestTweetChoreo.run();
+
+  //println(latestTweetResults.getScreenName());
+  println(latestTweetResults.getText());
+  
+  //stores User data
+  String tweetedAt = latestTweetResults.getScreenName();
+  //println("***" + tweetedAt);
+  
+  // Create the Choreo object using your Temboo session
+  StatusesUpdate statusesUpdateChoreo = new StatusesUpdate(session);
+
+  // Set inputs
+  statusesUpdateChoreo.setStatusUpdate("@" + tweetedAt + " " + "Sorry you're stressed. Take care of yourself, and here's a puppy! http://cdn4.list25.com/wp-content/uploads/2013/04/22-24_tn.jpg");
+  statusesUpdateChoreo.setConsumerKey("tjWXfTGej8Fql2fOla3Fh1fwt");
+  statusesUpdateChoreo.setAccessToken("852566361331179520-UZAgavm9ox9VeKVLsEog12QNtFI7wCZ");
+  statusesUpdateChoreo.setConsumerSecret("g5W1XnNMIEg8od4KB5q3jOAyTUT1lG6dXtKHToTKrt41Ie2gql");
+  statusesUpdateChoreo.setAccessTokenSecret("mJpQUZSDLgqTmXgCrTYh5jF30x48Tx48d7IM8k1C62oUd");
+
+  // Run the Choreo and store the results
+  StatusesUpdateResultSet statusesUpdateResults = statusesUpdateChoreo.run();
+  
+  // Print results
+  //println(statusesUpdateResults.getResponse());
+
+}
+
+
+void runSendDirectMessageChoreo() {
+  
+  // Create the Choreo object using your Temboo session
+  LatestTweet latestTweetChoreo = new LatestTweet(session);
+
+  // Set inputs
+  latestTweetChoreo.setQuery("I'm stressed");
+  latestTweetChoreo.setAccessToken("852566361331179520-UZAgavm9ox9VeKVLsEog12QNtFI7wCZ");
+  latestTweetChoreo.setConsumerKey("tjWXfTGej8Fql2fOla3Fh1fwt");
+  latestTweetChoreo.setConsumerSecret("g5W1XnNMIEg8od4KB5q3jOAyTUT1lG6dXtKHToTKrt41Ie2gql");
+  latestTweetChoreo.setAccessTokenSecret("mJpQUZSDLgqTmXgCrTYh5jF30x48Tx48d7IM8k1C62oUd");
+
+  // Run the Choreo and store the results
+  LatestTweetResultSet latestTweetResults = latestTweetChoreo.run();
+
+  //println(latestTweetResults.getScreenName());
+  println(latestTweetResults.getText());
+  
+  //stores User data
+  String tweetedAt = latestTweetResults.getScreenName();
+  //println("***" + tweetedAt);
+  
+  
+  // Create the Choreo object using your Temboo session
+  SendDirectMessage sendDirectMessageChoreo = new SendDirectMessage(session);
+
+  // Set inputs
+  sendDirectMessageChoreo.setAccessToken("852566361331179520-UZAgavm9ox9VeKVLsEog12QNtFI7wCZ");
+  sendDirectMessageChoreo.setConsumerKey("tjWXfTGej8Fql2fOla3Fh1fwt");
+  sendDirectMessageChoreo.setConsumerSecret("g5W1XnNMIEg8od4KB5q3jOAyTUT1lG6dXtKHToTKrt41Ie2gql");
+  println("***" + tweetedAt);
+  sendDirectMessageChoreo.setScreenName(tweetedAt);
+  sendDirectMessageChoreo.setAccessTokenSecret("mJpQUZSDLgqTmXgCrTYh5jF30x48Tx48d7IM8k1C62oUd");
+  sendDirectMessageChoreo.setText("Hi I'm puppypuppybot and I saw that you're stressed! Remember to rest and take time for yourself, even if you have things to do. It does more than you think to treat yourself well. Also have a puppy! http://cdn4.list25.com/wp-content/uploads/2013/04/22-24_tn.jpg");
+
+  // Run the Choreo and store the results
+  SendDirectMessageResultSet sendDirectMessageResults = sendDirectMessageChoreo.run();
+  
+  // Print results
+  //println(sendDirectMessageResults.getResponse());
+
+}
